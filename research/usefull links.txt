@@ -3,3 +3,5 @@ pedalshield documentation: https://www.electrosmash.com/pedalshield
 pedalshield programming documentation: https://www.electrosmash.com/forum/software-pedalshield/21-how-to-start-programming-pedalshield?lang=en
 
 signal effects codes: https://github.com/ElectroSmash/pedalshield
+
+adc on plotter: https://github.com/EKMallon/Arduino-DAQ-with-ADS1115/blob/master/UNOonly_DAQ_PeaksOrLeakAverage/UNOonly_DAQ_PeaksOrLeakAverage.ino
