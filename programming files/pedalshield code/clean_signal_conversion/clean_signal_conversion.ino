@@ -9,8 +9,8 @@ int LED = 3;
 int FOOTSWITCH = 7; 
 int TOGGLE = 2; 
 
-const int lowerlimit = 0;
-const int upperlimit = 4000;
+const int lowerlimit = 1500;
+const int upperlimit = 2500;
 
 void setup()
 {
@@ -24,6 +24,7 @@ void setup()
   //DAC Configuration
   analogWrite(DAC0,0);  // Enables DAC0
   analogWrite(DAC1,0);  // Enables DAC0
+  analogWrite(55, 168);
 }
 
 void loop()
@@ -36,13 +37,13 @@ void loop()
   POT1=ADC->ADC_CDR[11];                 // read data from ADC9   
   POT2=ADC->ADC_CDR[12];                 // read data from ADC10 
 
-Serial.print("Lowerlimit:");
-Serial.println(lowerlimit); // To freeze the lower limit
-Serial.print(",");
-Serial.print("Upperlimit:");
-Serial.println(upperlimit); // To freeze the upper limit
+//Serial.print("Lowerlimit:");
+//Serial.println(lowerlimit); // To freeze the lower limit
+//Serial.print(",");
+//Serial.print("Upperlimit:");
+//Serial.println(upperlimit); // To freeze the upper limit
   //print the input values of adc0 and adc1
-  Serial.print(",");
+  //Serial.print(",");
   Serial.print("adc_0:");
   Serial.println(in_ADC0);
   //Serial.print(",");
@@ -52,9 +53,9 @@ Serial.println(upperlimit); // To freeze the upper limit
   //Add volume feature with POT2
   out_DAC0=map(in_ADC0,0,4095,1,POT2);
   out_DAC1=map(in_ADC1,0,4095,1,POT2);
-    Serial.print(",");
-  Serial.print("adc_0_amplified:");
-  Serial.println(out_DAC0);
+   // Serial.print(",");
+  //Serial.print("adc_0_amplified:");
+  //Serial.println(out_DAC0);
   //Write the DACs
   dacc_set_channel_selection(DACC_INTERFACE, 0);       //select DAC channel 0
   dacc_write_conversion_data(DACC_INTERFACE, out_DAC0);//write on DAC
