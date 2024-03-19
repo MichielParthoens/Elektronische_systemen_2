@@ -30,7 +30,7 @@ char maxBuffer[20];
 int prevYCoordinates[45] = {27};
 
 //Constructor for OLED screen
-U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ SCL, /* data=*/ SDA, /* reset=*/ U8X8_PIN_NONE);
+U8G2_SSD1306_128X32_UNIVISION_F_SW_I2C u8g2(U8G2_R0, /* clock=*/ SCL1, /* data=*/ SDA1, /* reset=*/ U8X8_PIN_NONE);
 
 void plotter();
 
@@ -82,19 +82,24 @@ void plotter()
     POT1 = ADC->ADC_CDR[11];               // read data from ADC9
     POT2 = ADC->ADC_CDR[12];               // read data from ADC10
 
+    Serial.print("adc_0:");
+    Serial.println(in_ADC0);
+
     //Add volume feature with POT2
     currentY = map(in_ADC0, 0, 4095, 27, 3);
     prevYCoordinates[i + 1] = currentY;
     u8g2.drawLine(i + 3, prevYCoordinates[i], i + 4, prevYCoordinates[i + 1]); //x0, y0, x1, y1
   }
 
-  if (in_ADC0 > maxValue)
+  int currentFreq = in_ADC0 / 100;
+
+  if (currentFreq > maxValue)
   {
-    maxValue = in_ADC0;
+    maxValue = currentFreq;
   }
 
   sprintf(maxBuffer, "Max: %d", maxValue);
-  sprintf(freqBuffer, "Freq: %d", in_ADC0);
+  sprintf(freqBuffer, "Freq: %d", currentFreq);
 
   //Shows the frequency in digits for user
   u8g2.setFont(u8g2_font_6x10_tr);
