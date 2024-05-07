@@ -20,12 +20,7 @@ int FOOTSWITCH = 7;
 int TOGGLE = 2;
 
 const int lowerlimit = 0;
-const int upperlimit = 4000;
-
-int maxValue = 0;
-
-char freqBuffer[20];
-char maxBuffer[20];
+const int upperlimit = 5000;
 
 int prevYCoordinates[45] = {27};
 
@@ -44,6 +39,11 @@ void setup()
   ADC->ADC_CHER = 0x1CC0; // Enable ADC channels 0 and 1.
 
   //DAC Configuration
+
+  analogWrite(DAC0,0);  // Enables DAC0
+  analogWrite(DAC1,0);  // Enables DAC0
+  analogWrite(55, 168);
+
   analogWrite(DAC0, 0); // Enables DAC0
   analogWrite(DAC1, 0); // Enables DAC0
 
@@ -82,7 +82,15 @@ void plotter()
     POT1 = ADC->ADC_CDR[11];               // read data from ADC9
     POT2 = ADC->ADC_CDR[12];               // read data from ADC10
 
+    Serial.print("Lowerlimit:");
+    
+    Serial.println(lowerlimit); // To freeze the lower limit
+    Serial.print(",");
+    Serial.print("Upperlimit:");
+    Serial.println(upperlimit); // To freeze the upper limit
+    
     Serial.print("adc_0:");
+    
     Serial.println(in_ADC0);
 
     //Add volume feature with POT2
@@ -91,18 +99,15 @@ void plotter()
     u8g2.drawLine(i + 3, prevYCoordinates[i], i + 4, prevYCoordinates[i + 1]); //x0, y0, x1, y1
   }
 
-  int currentFreq = in_ADC0 / 100;
-
-  if (currentFreq > maxValue)
-  {
-    maxValue = currentFreq;
-  }
-
-  sprintf(maxBuffer, "Max: %d", maxValue);
-  sprintf(freqBuffer, "Freq: %d", currentFreq);
-
   //Shows the frequency in digits for user
-  u8g2.setFont(u8g2_font_6x10_tr);
-  u8g2.drawStr(60, 12, freqBuffer);
-  u8g2.drawStr(60, 25, maxBuffer);
+  u8g2.setFont(u8g2_font_4x6_tr);
+  u8g2.drawStr(60, 12, "Made by");
+  u8g2.drawStr(60, 25, "Michiel & Loic");
 }
+
+/*
+dacc_set_channel_selection(DACC_INTERFACE, 0);       //select DAC channel 0
+dacc_write_conversion_data(DACC_INTERFACE, out_DAC0);//write on DAC
+dacc_set_channel_selection(DACC_INTERFACE, 1);       //select DAC channel 1
+dacc_write_conversion_data(DACC_INTERFACE, out_DAC1);//write on DAC
+*/
