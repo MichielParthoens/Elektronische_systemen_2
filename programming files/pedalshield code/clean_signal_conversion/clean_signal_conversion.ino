@@ -57,6 +57,7 @@ void loop()
   //print the input values of adc0 and adc1
   //Serial.print(",");
   Serial.print("adc_0:");
+  
   Serial.println(in_ADC0);
   //Serial.print(",");
   //Serial.print("adc_1:");
